@@ -1,12 +1,20 @@
 version: '3'
 services:
   db:
+    container_name: db
     image: postgres
     ports:
       - "5432:5432"
     environment:
+      EXTERNAL_PORT: ${EXTERNAL_PORT}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: "jira"
+    restart: unless-stopped
+    volumes:
+        - local_pgdata:/var/lib/postgresql/data
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
 
 
   app:
@@ -19,21 +27,35 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/jira
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_USER: ${DB_USERNAME}
-        - "db.username=${DB_USERNAME}"
-        - "db.password=${DB_PASSWORD}"
-        - "oauth2.github.client-id=${GITHUB_CLIENT_ID}"
-        - "oauth2.github.client-secret=${GITHUB_CLIENT_SECRET}"
-        - "oauth2.google.client-id=${GOOGLE_CLIENT_ID}"
-        - "oauth2.google.client-secret=${GOOGLE_CLIENT_SECRET}"
-        - "oauth2.gitlab.client-id=${GITLAB_CLIENT_ID}"
-        - "oauth2.gitlab.client-secret=${GITLAB_CLIENT_SECRET}"
-        - "mail.username=${MAIL_USERNAME}"
-        - "mail.password=${MAIL_PASSWORD}"
-
+      OAUTH2_GITHUB_CLIENT_ID: ${OAUTH2_GITHUB_CLIENT_ID}
+      OAUTH2_GITHUB_CLIENT_SECRET: ${OAUTH2_GITHUB_CLIENT_SECRET}
+      OAUTH2_GOOGLE_CLIENT_ID: ${OAUTH2_GOOGLE_CLIENT_ID}
+      OAUTH2_GOOGLE_CLIENT_SECRET: ${OAUTH2_GOOGLE_CLIENT_SECRET}
+      OAUTH2_GITLAB_CLIENT_ID: ${OAUTH2_GITLAB_CLIENT_ID}
+      OAUTH2_GITLAB_CLIENT_SECRET: ${OAUTH2_GITLAB_CLIENT_SECRET}
+      OAUTH2_VK_CLIENT_ID: ${OAUTH2_VK_CLIENT_ID}
+      OAUTH2_VK_CLIENT_SECRET: ${OAUTH2_VK_CLIENT_SECRET}
+      OAUTH2_YANDEX_CLIENT_ID: ${OAUTH2_YANDEX_CLIENT_ID}
+      OAUTH2_YANDEX_CLIENT_SECRET: ${OAUTH2_YANDEX_CLIENT_SECRET}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
 
     build:
       context: /
       dockerfile: Dockerfile
 
+  pgadmin:
+      image: dpage/pgadmin4
+      container_name: pgadmin4
+      restart: always
+      ports:
+        - "8888:80"
+      environment:
+        PGADMIN_DEFAULT_EMAIL: postgres@postgres.com
+        PGADMIN_DEFAULT_PASSWORD: postgres
+      volumes:
+        - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  local_pgdata:
+  pgadmin-data:

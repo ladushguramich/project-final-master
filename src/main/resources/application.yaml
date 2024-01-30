@@ -26,9 +26,9 @@ spring:
         # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
         jdbc.batch_size: 20
   datasource:
-    url: jdbc:postgresql://localhost:5432/jira
-    username: {DB_USERNAME}
-    password: {DB_PASSWORD}
+    url: jdbc:postgresql://db:5432/jira
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   liquibase:
     changeLog: "classpath:db/changelog.sql"
@@ -51,33 +51,33 @@ spring:
       client:
         registration:
           github:
-            client-id: ${GITHUB_CLIENT_ID}
-            client-secret: ${GITHUB_CLIENT_SECRET}
+            client-id: ${OAUTH2_GITHUB_CLIENT_ID}
+            client-secret: ${OAUTH2_GITHUB_CLIENT_SECRET}
             scope:
               - email
           google:
-            client-id: ${GOOGLE_CLIENT_ID}
-            client-secret: ${GOOGLE_CLIENT_SECRET}
+            client-id: ${OAUTH2_GOOGLE_CLIENT_ID}
+            client-secret: ${OAUTH2_GOOGLE_CLIENT_SECRET}
             scope:
               - email
               - profile
           vk:
-            client-id: 51562377
-            client-secret: jNM1YHQy1362Mqs49wUN
+            client-id: ${OAUTH2_VK_CLIENT_ID}
+            client-secret: ${OAUTH2_VK_CLIENT_SECRET}
             client-name: Vkontakte
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code
             scope: email
           yandex:
-            client-id: 2f3395214ba84075956b76a34b231985
-            client-secret: ed236c501e444a609b0f419e5e88f1e1
+            client-id: ${OAUTH2_YANDEX_CLIENT_ID}
+            client-secret: ${OAUTH2_YANDEX_CLIENT_SECRET}
             client-name: Yandex
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
           gitlab:
-            client-id: ${GITLAB_CLIENT_ID}
-            client-secret: ${GITLAB_CLIENT_SECRET}
+            client-id: ${OAUTH2_GITLAB_CLIENT_ID}
+            client-secret: ${OAUTH2_GITLAB_CLIENT_SECRET}
             client-name: GitLab
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
