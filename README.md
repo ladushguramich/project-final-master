@@ -28,3 +28,6 @@
 
 Список выполненных задач:
 ...
+url: jdbc:postgresql://localhost:5432/postgres
+username: postgres
+password: 1234
