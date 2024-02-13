@@ -28,9 +28,26 @@
                             </button>
                         </form>
                     </th:block>
+
+                    <div class="lang-changer">
+                        <span th:text="#{lang.change}"></span>:
+                        <select id="locales" onchange="changeLanguage(this.value)">
+                            <a href="/?lang=en"><option value="en" th:text="#{lang.en}"></option></a>
+                            <a href="/?lang=en"><option value="ru" th:text="#{lang.ru}"></option></a>
+                        </select>
+                    </div>
                 </div>
             </div>
         </nav>
+        <script type="text/javascript">
+            function changeLanguage(selectedValue) {
+                if (selectedValue === 'en') {
+                    window.location.href = '/?lang=en';
+                } else if (selectedValue === 'ru') {
+                    window.location.href = '/?lang=ru';
+                }
+            }
+        </script>
     </header>
 </div>
 </html>

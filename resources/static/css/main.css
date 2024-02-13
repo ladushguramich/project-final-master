@@ -274,3 +274,7 @@
     max-height: clamp(5em, 50vh, 300px);
     overflow: auto;
 }
+
+.lang-changer{
+    margin-left: 15px;
+}

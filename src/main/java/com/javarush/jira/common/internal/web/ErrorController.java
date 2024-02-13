@@ -45,7 +45,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
         Throwable error = errorAttributes.getError(request);
         String path = (String) errorAttributesMap.get("path");
         Integer status = (Integer) errorAttributesMap.get("status");
-        String msg = (String) errorAttributesMap.get("message");
+        String msg = (String) errorAttributesMap.get("messages");
         return uiExceptionHandler.processError(error, msg, path, status);
     }
 }
